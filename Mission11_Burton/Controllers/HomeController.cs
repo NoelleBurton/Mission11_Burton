@@ -9,21 +9,21 @@ namespace Mission11_Burton.Controllers
     public class HomeController : Controller
     {
 
-        private IWaterRepository _repo;
+        private IBookstoreRepository _repo;
 
-        public HomeController(IWaterRepository temp)
+        public HomeController(IBookstoreRepository temp)
         {
             _repo = temp;
         }
 
         public IActionResult Index(int pageNum)
         {
-            int pageSize = 5;
+            int pageSize = 10;
 
             var bundle = new ProjectListViewModel
             {
-                Projects = _repo.Projects
-                .OrderBy(x => x.ProjectName)
+                Books = _repo.Books
+                .OrderBy(x => x.Title)
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize),
 
@@ -31,7 +31,7 @@ namespace Mission11_Burton.Controllers
                 {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
-                    TotalItems = _repo.Projects.Count()
+                    TotalItems = _repo.Books.Count()
                 }
         };
 
